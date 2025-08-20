@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_17_080242) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_20_063041) do
+  create_table "orders", force: :cascade do |t|
+    t.integer "count"
+    t.integer "total_price"
+    t.string "address"
+    t.integer "product_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -37,4 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_17_080242) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "orders", "products"
+  add_foreign_key "orders", "users"
 end

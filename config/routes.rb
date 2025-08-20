@@ -1,8 +1,22 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "homes#top"
-  resources :products
+  # マイページのルート
   resources :mypage, only: [:show]
+
+  # 商品関連ルート
+  resources :products
+
+  # 注文関連ルート
+  resources :orders, only: [:index, :new, :create] do 
+    collection do
+      post :confirm   # 注文確認
+    end
+
+    member do
+      get :complete  # 注文完了
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
