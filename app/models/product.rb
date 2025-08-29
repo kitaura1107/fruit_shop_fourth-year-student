@@ -1,7 +1,8 @@
 class Product < ApplicationRecord
   # 関連付け
   has_many :orders
-  
+  has_many :cart_items
+
   validates :name, presence: true, uniqueness: true  # 商品名は必須で一意
   validates :price, presence: true                   # 価格は必須
 

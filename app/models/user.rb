@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   # 関連付け
   has_many :orders
+  has_one :cart
 end

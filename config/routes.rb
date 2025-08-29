@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "carts/show"
+  get "carts/index"
   devise_for :users
   root to: "homes#top"
   # マイページのルート
@@ -15,6 +17,17 @@ Rails.application.routes.draw do
 
     member do
       get :complete  # 注文完了
+    end
+  end
+
+  resources :carts, only: [:show, :index] do
+  # セッションカートに商品を追加、数量を更新、商品を削除するアクション
+    collection do
+      post :add_product  # カートに商品を追加
+    end
+    member do
+      delete :remove_item  # カートから商品を削除
+      post :update_quantity  # カート内の商品個数変更
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
