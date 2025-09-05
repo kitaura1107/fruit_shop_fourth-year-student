@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_29_024232) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_05_025932) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_024232) do
   create_table "cart_items", force: :cascade do |t|
     t.integer "cart_id", null: false
     t.integer "product_id", null: false
-    t.integer "quantity", default: 1, null: false
+    t.integer "quantity", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
@@ -56,15 +56,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_024232) do
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
+  create_table "order_details", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "order_id", null: false
+    t.integer "quantity"
+    t.integer "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_details_on_order_id"
+    t.index ["product_id"], name: "index_order_details_on_product_id"
+  end
+
   create_table "orders", force: :cascade do |t|
-    t.integer "count"
     t.integer "total_price"
     t.string "address"
-    t.integer "product_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_orders_on_product_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -74,6 +82,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_024232) do
     t.integer "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -100,6 +109,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_024232) do
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
   add_foreign_key "carts", "users"
-  add_foreign_key "orders", "products"
+  add_foreign_key "order_details", "orders"
+  add_foreign_key "order_details", "products"
   add_foreign_key "orders", "users"
 end

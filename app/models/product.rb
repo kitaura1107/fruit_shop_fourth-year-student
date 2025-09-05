@@ -1,8 +1,13 @@
 class Product < ApplicationRecord
-  # 関連付け
-  has_many :orders
-  has_many :cart_items
+  
+  # Enum（販売状況）
+  enum :status, { on_sale: 0, sold_out: 1 }
 
+  # 関連付け
+  has_many :orders, through: :order_details
+  has_many :cart_items
+  has_many :order_details
+  
   validates :name, presence: true, uniqueness: true  # 商品名は必須で一意
   validates :price, presence: true                   # 価格は必須
 
@@ -13,5 +18,5 @@ class Product < ApplicationRecord
   def thumbnail
     photo.variant(resize_to_limit: [150, 150]).processed  # 画像を 150x150 ピクセル以内にリサイズ
   end
-  
+
 end

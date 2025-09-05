@@ -30,6 +30,10 @@ Rails.application.routes.draw do
       post :update_quantity  # カート内の商品個数変更
     end
   end
+  
+  # ユーザーのカート内の商品操作
+  resources :cart_items, only: [:create, :update, :destroy]
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

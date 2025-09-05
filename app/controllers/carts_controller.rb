@@ -1,5 +1,7 @@
 class CartsController < ApplicationController
   def show
+     @cart = Cart.find_by(user_id: current_user.id) 
+     user_cart_calculation
   end
 
   def index
