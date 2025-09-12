@@ -15,7 +15,12 @@ module FruitShop
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
-
+    
+    # タイムゾーン指定
+    config.time_zone = 'Tokyo'
+    # 日本語化
+    config.i18n.default_locale = :ja
+    
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
